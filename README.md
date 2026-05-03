@@ -29,17 +29,9 @@ Futtatás:
   Ha i, akkor a input.txt fájlból tölt.
 
 input.txt formátum: 6 sor, 7 karakter soronként
-. → üres mező
-X → gép
-O → játékos
-
-Példa:
-  .......
-    .......
-    .......
-  ..O....
-  ..O....
-  ..O....
+    - . → üres mező
+    - X → gép
+    - O → játékos
 
 - AI működés:
   - Állapottér reprezentáció: GameState
