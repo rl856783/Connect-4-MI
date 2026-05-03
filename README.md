@@ -49,3 +49,7 @@ input.txt formátum: 6 sor, 7 karakter soronként
 
 Megjegyzés:
 A projekt a Mesterséges Intelligencia tantárgy beadandójaként készült, és a keresőalgoritmusok gyakorlati alkalmazását demonstrálja.
+
+## Dokumentáció
+
+A részletes dokumentáció a `dokumentacio.pdf` fájlban található.
