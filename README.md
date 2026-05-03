@@ -45,14 +45,15 @@ Példa:
   - Állapottér reprezentáció: GameState
   - Kereső algoritmus: minimax
   - Optimalizálás: alfa–béta vágás
-Mélység: 8 lépés
-Értékelés: mintafelismerés (4-es ablakok)
-Főbb osztályok
-GameState – állapot reprezentáció
-MinimaxAI – döntéshozó algoritmus
-Game – játékmenet vezérlés
-Board – tábla kezelése
-Database – statisztika tárolás
-Megjegyzés
+  - Mélység: 8 lépés
+  - Értékelés: mintafelismerés (4-es ablakok)
 
+- Főbb osztályok:
+    - GameState – állapot reprezentáció
+    - MinimaxAI – döntéshozó algoritmus
+    - Game – játékmenet vezérlés
+    - Board – tábla kezelése
+    - Database – statisztika tárolás
+
+Megjegyzés:
 A projekt a Mesterséges Intelligencia tantárgy beadandójaként készült, és a keresőalgoritmusok gyakorlati alkalmazását demonstrálja.
