@@ -52,4 +52,4 @@ A projekt a Mesterséges Intelligencia tantárgy beadandójaként készült, és
 
 ## Dokumentáció
 
-A részletes dokumentáció a `dokumentacio.pdf` fájlban található.
+A részletes dokumentáció a `AI_dokumentacio.pdf` fájlban található.
