@@ -7,8 +7,8 @@ Ez a projekt egy klasszikus Connect4 játék Java nyelven megvalósítva, amely 
 
 A gép döntéshozatala minimax algoritmuson alapul, amelyet alfa–béta vágás optimalizál.
 
-Főbb funkciók
-Konzolos Connect4 játék
+Főbb funkciók:
+- Konzolos Connect4 játék
 Ember vs gép játékmód
 AI döntéshozatal:
 minimax algoritmus
