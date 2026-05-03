@@ -1,5 +1,4 @@
 package org.example.connect4;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -8,9 +7,8 @@ public class Game {
     private final Player player2; // A második játékos (gép)
     private Player currentPlayer; // Az aktuális játékos
     private boolean isComputerTurn; // Jelezze, hogy most a gép jön-e
-    private final Random random; // Véletlenszám generátor a gép számára
     private static final String SAVE_FILE = "connect4_save.txt"; // Mentési fájl neve
-
+    private final MinimaxAI minimaxAI;
     /**
      * Konstruktor, amely létrehozza a játékot az emberi és a gépi játékos között.
      * @param player1 Az emberi játékos.
@@ -22,7 +20,7 @@ public class Game {
         this.player2 = player2; // A gépi játékos hozzárendelése
         this.currentPlayer = player1; // Az emberi játékos kezd
         this.isComputerTurn = false; // Az első körben az ember játszik
-        this.random = new Random(); // Véletlenszám generátor inicializálása
+        this.minimaxAI = new MinimaxAI();
     }
 
     /**
@@ -43,14 +41,18 @@ public class Game {
     }
 
     /**
-     * A gépi játékos véletlenszerű lépése.
+     * A gépi játékos minimax algoritmussal kiválasztott lépése.
      * @return Az oszlop indexe (0-6), ahova a gép lépni fog.
      */
     public int computerMove() {
-        int column;
-        do {
-            column = random.nextInt(7); // Véletlenszerű oszlop választása
-        } while (!board.isColumnAvailable(column)); // Addig próbálkozunk, amíg találunk üres oszlopot
+        GameState state = new GameState(convertBoardForAI(), true);
+
+        int column = minimaxAI.findBestMove(state, 8);
+
+        if (column == -1) {
+            throw new IllegalStateException("A gép nem talált érvényes lépést.");
+        }
+
         return column;
     }
 
@@ -67,7 +69,22 @@ public class Game {
                 checkDirection(row, col, 1, 1, symbol) || // Főátló ellenőrzés
                 checkDirection(row, col, 1, -1, symbol);   // Mellékátló ellenőrzés
     }
+    private char[][] convertBoardForAI() {
+        char[][] original = board.getBoard();
+        char[][] converted = new char[6][7];
 
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (original[row][col] == ' ') {
+                    converted[row][col] = '.';
+                } else {
+                    converted[row][col] = original[row][col];
+                }
+            }
+        }
+
+        return converted;
+    }
     /**
      * Ellenőrzi, hogy az adott irányban (dx, dy) van-e 4 egymás melletti korong.
      * @param row A kiindulási sor.
@@ -101,6 +118,7 @@ public class Game {
         return count >= 4; // Ha 4 vagy több azonos szimbólum van egy sorban, nyer
     }
 
+
     /**
      * A játék fő folyamata.
      */
@@ -110,20 +128,36 @@ public class Game {
         database.addPlayer(player1.name());
         database.addPlayer(player2.name());
 
-        // Mentett játék betöltése
-        if (board.hasSavedGame(SAVE_FILE)) {
-            System.out.println("Mentett játékállás található. Be akarod tölteni? (i/n)");
-            String input = scanner.nextLine().toLowerCase();
-            if (input.equals("i")) {
-                board.loadFromFile(SAVE_FILE); // Betöltés
-            } else {
-                System.out.println("Üres táblával indul a játék.");
-                board.resetBoard();
-            }
+        System.out.println("Játékosok:");
+        System.out.println(player1.color() + player1.name() + " jele: " + player1.symbol() + "\u001B[0m");
+        System.out.println(player2.color() + player2.name() + " jele: " + player2.symbol() + "\u001B[0m");
+        System.out.println();
+
+        System.out.println("Szeretnél kezdőállást betölteni fájlból? (i/n)");
+        String inputFileChoice = scanner.nextLine().toLowerCase();
+
+        if (inputFileChoice.equals("i")) {
+            board.loadFromInputFile("input.txt");
         } else {
-            System.out.println("Nem található mentett állás. Üres táblával indul a játék.");
             board.resetBoard();
         }
+
+
+
+        // Mentett játék betöltése
+      //  if (board.hasSavedGame(SAVE_FILE)) {
+       //     System.out.println("Mentett játékállás található. Be akarod tölteni? (i/n)");
+        //    String input = scanner.nextLine().toLowerCase();
+         //   if (input.equals("i")) {
+          //      board.loadFromFile(SAVE_FILE); // Betöltés
+           // } else {
+            //    System.out.println("Üres táblával indul a játék.");
+             //   board.resetBoard();
+            //}
+       // } else {
+        ///    System.out.println("Nem található mentett állás. Üres táblával indul a játék.");
+         //   board.resetBoard();
+       // }
 
         boolean gameWon = false;
 

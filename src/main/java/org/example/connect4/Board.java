@@ -86,23 +86,45 @@ public class Board {
 
     /**
      * Kiírja a táblát a konzolra színezett karakterekkel.
-     * Az 'X' sárga, az 'O' piros, az üres helyek alapértelmezett színnel jelennek meg.
+     * Az 'X' piros, az 'O' sárga, az üres helyek alapértelmezett színnel jelennek meg.
      */
     public void printBoard() {
         System.out.println("  A B C D E F G"); // Oszlopok betűjelzése.
         for (int i = 0; i < SOROK; i++) {
             System.out.print((SOROK - i) + " "); // Sorok számozása (felülről lefelé).
             for (int j = 0; j < OSZLOPOK; j++) {
-                // A mező színe és értéke alapján választjuk ki a színt.
+                // A mező értéke alapján választjuk ki a színt.
                 if (board[i][j] == 'X') {
-                    System.out.print("\u001B[33m" + board[i][j] + "\u001B[0m "); // Sárga.
+                    System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m "); // X = piros, gép
                 } else if (board[i][j] == 'O') {
-                    System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m "); // Piros.
+                    System.out.print("\u001B[33m" + board[i][j] + "\u001B[0m "); // O = sárga, ember
                 } else {
-                    System.out.print("\u001B[0m- "); // Üres hely '-'.
+                    System.out.print("\u001B[0m- ");
                 }
             }
             System.out.println();
+        }
+    }
+
+    public void loadFromInputFile(String filename) {
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(filename))) {
+
+            for (int row = 0; row < 6; row++) {
+                String line = br.readLine();
+
+                for (int col = 0; col < 7; col++) {
+                    char c = line.charAt(col);
+
+                    if (c == '.') {
+                        board[row][col] = ' ';
+                    } else {
+                        board[row][col] = c;
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Hiba a fájl betöltésekor: " + e.getMessage());
         }
     }
 

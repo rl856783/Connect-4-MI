@@ -16,10 +16,10 @@ public class Connect4 {
         String playerName = scanner.nextLine(); // A név beolvasása a konzolról.
 
         // Emberi játékos létrehozása: 'X' szimbólumot és sárga színt kap.
-        Player player1 = new Player(playerName, 'X', "\u001B[33m");
+        Player player1 = new Player(playerName, 'O', "\u001B[33m");
 
         // Gépi játékos létrehozása: 'O' szimbólumot és piros színt kap.
-        Player player2 = new Player("Gép", 'O', "\u001B[31m");
+        Player player2 = new Player("Gép", 'X', "\u001B[31m");
 
         // Játék inicializálása az emberi és gépi játékossal.
         Game game = new Game(player1, player2);
